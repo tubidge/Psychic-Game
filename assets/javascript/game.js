@@ -23,6 +23,7 @@ var instructionsText = document.getElementById("instructions");
 var lettersGuessedText = document.getElementById("letters-guessed");
 var guessesLeftText = document.getElementById("guesses-left");
 var winsText = document.getElementById("wins");
+var lossesText = document.getElementById("losses");
 
 // Variable to choose computer guess on page load
 var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
@@ -35,25 +36,35 @@ document.onkeyup = function(event) {
     console.log("Computer Guess: " + computerGuess);
     console.log("Your Guess: " + userGuess);
     console.log("------------");
-// Push new guessesLeft to page
+// Update new guessesLeft to page
     guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
-// Add user guess to guessesSoFar array
+// Push user guess to guessesSoFar array
     guessesSoFar.push(" " + userGuess);
-// Push new guessesSoFar to page
+// Update new guessesSoFar to page
     lettersGuessedText.textContent = "Your Guesses So Far: " + guessesSoFar;
-// Check if userGuess is correct. If true, increment Wins and push to page
+// Check if userGuess is correct. 
+// If so, increment Wins, reset guessesLeft and guessesSoFar, update to page, comp picks new random letter, alert "Win"
     if (userGuess === computerGuess) {
         wins++;
         winsText.textContent = "Wins: " + wins;
         guessesLeft = 10;
         guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
         computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-            //  >>> Add reset guessesSoFar once I figure it out <<<
-        guessesSoFar = [undefined];
+        guessesSoFar = [];
         lettersGuessedText.textContent = "Your Guesses So Far: ";
-    } else {};
+        alert("You Won!");
+// If user makes 10 incorrect guesses, increment Losses, reset guessesLeft and guessesSoFar, update to page, comp picks new random letter, alert "Lose"
+    } else if (guessesLeft < 1) {
+        losses++;
+        lossesText.textContent = "Losses: " + losses;
+        guessesLeft = 10;
+        guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
+        computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        guessesSoFar = [];
+        lettersGuessedText.textContent = "Your Guesses So Far: ";
+        alert("You Lost!")
+    }
     };
-    console.log(guessesSoFar);
 
 
 
